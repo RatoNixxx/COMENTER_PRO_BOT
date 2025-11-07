@@ -1,4 +1,4 @@
-// COMENTER PRO BOT - Versão SEM duplicação de texto
+// COMENTER PRO BOT - Versão SUPER SIMPLES
 // GitHub: https://ratonixxx.github.io/COMENTER_PRO_BOT
 
 (function() {
@@ -57,7 +57,7 @@
                     <div style="font-size: 20px; margin-right: 10px;">💬</div>
                     <div>
                         <div style="color: #3498db; font-weight: bold; font-size: 16px;">COMENTER PRO</div>
-                        <div style="color: #bdc3c7; font-size: 10px;">SEM DUPLICAÇÃO DE TEXTO</div>
+                        <div style="color: #bdc3c7; font-size: 10px;">TEXTO EXATO - SEM MISTURAS</div>
                     </div>
                 </div>
                 <div style="display: flex; gap: 5px;">
@@ -93,21 +93,21 @@
                     </div>
                     
                     <div style="margin: 10px 0;">
-                        <label style="display: block; margin-bottom: 5px; font-size: 12px;">🔧 Método:</label>
+                        <label style="display: block; margin-bottom: 5px; font-size: 12px;">🎯 Método:</label>
                         <select id="typingMethod" style="width: 100%; padding: 8px; border: none; border-radius: 5px; background: #2c3e50; color: white;">
-                            <option value="direct">DIRETO ÚNICO (RECOMENDADO)</option>
+                            <option value="exact">TEXTO EXATO (RECOMENDADO)</option>
                             <option value="simple">Simples</option>
                         </select>
                     </div>
 
                     <div style="margin: 10px 0;">
-                        <label style="display: block; margin-bottom: 5px; font-size: 12px;">✅ Controle:</label>
+                        <label style="display: block; margin-bottom: 5px; font-size: 12px;">🔒 Segurança:</label>
                         <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px;">
                             <label style="font-size: 11px; display: flex; align-items: center;">
-                                <input type="checkbox" id="singleInsert" checked> Inserção ÚNICA
+                                <input type="checkbox" id="exactText" checked> Texto EXATO
                             </label>
                             <label style="font-size: 11px; display: flex; align-items: center;">
-                                <input type="checkbox" id="noEvents" checked> Sem eventos complexos
+                                <input type="checkbox" id="noMistake" checked> Sem erros
                             </label>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                         style="width: 100%; padding: 8px; border: none; border-radius: 5px; background: #2c3e50; color: white; resize: vertical; font-size: 12px;">Olá
 Teste
 Mensagem simples</textarea>
-                    <div style="color: #bdc3c7; font-size: 10px; margin-top: 5px;">💡 Texto inserido UMA vez apenas</div>
+                    <div style="color: #bdc3c7; font-size: 10px; margin-top: 5px;">💡 Texto inserido EXATAMENTE como está</div>
                 </div>
 
                 <div style="display: flex; gap: 10px; margin-bottom: 15px;">
@@ -138,19 +138,19 @@ Mensagem simples</textarea>
                 <div id="comenterStatus" style="
                     padding: 10px; border-radius: 5px; background: #34495e; 
                     font-size: 11px; text-align: center; min-height: 20px;">
-                    ✅ Inserção ÚNICA - PRONTO
+                    ✅ Texto EXATO - PRONTO
                 </div>
 
                 <div style="text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #34495e;">
                     <p style="color: #7f8c8d; font-size: 10px; margin: 0;">
-                        F2: Ocultar/Mostrar | SEM DUPLICAÇÃO
+                        F2: Ocultar/Mostrar | SEM MISTURAS
                     </p>
                 </div>
             </div>
 
             <div id="minimizedPanel" style="display: none; text-align: center; padding: 10px;">
                 <div style="color: #3498db; font-weight: bold; font-size: 14px;">COMENTER PRO</div>
-                <div style="color: #bdc3c7; font-size: 10px; margin: 5px 0;" id="minimizedStatus">Inserção única</div>
+                <div style="color: #bdc3c7; font-size: 10px; margin: 5px 0;" id="minimizedStatus">Texto exato</div>
                 <button onclick="window.maximizePanel()" style="
                     background: #3498db; color: white; border: none; 
                     padding: 5px 10px; border-radius: 3px; cursor: pointer; 
@@ -288,7 +288,7 @@ Mensagem simples</textarea>
         }
     };
 
-    // ========== SISTEMA DE INSERÇÃO ÚNICA ==========
+    // ========== SISTEMA DE TEXTO EXATO ==========
     window.startComenterBot = async function() {
         if (window.comenterRunning) {
             updateStatus('⚠️ Bot já está rodando!', '#f39c12');
@@ -297,7 +297,6 @@ Mensagem simples</textarea>
 
         const interval = parseInt(document.getElementById('comenterInterval').value) * 60000;
         const messages = document.getElementById('comenterMessages').value.split('\n').filter(m => m.trim());
-        const typingMethod = document.getElementById('typingMethod').value;
 
         if (messages.length === 0) {
             updateStatus('❌ Digite pelo menos uma mensagem!', '#e74c3c');
@@ -316,7 +315,7 @@ Mensagem simples</textarea>
 
             const message = messages[messageIndex % messages.length];
             
-            const success = await singleInsertTyping(message, typingMethod);
+            const success = await exactTextInsert(message);
 
             if (success) {
                 window.messageCount++;
@@ -350,10 +349,11 @@ Mensagem simples</textarea>
         }
     };
 
-    // ========== INSERÇÃO ÚNICA - SEM DUPLICAÇÃO ==========
-    async function singleInsertTyping(message, method) {
+    // ========== INSERÇÃO DE TEXTO EXATO ==========
+    async function exactTextInsert(message) {
         try {
-            console.log('🔍 Procurando campo...');
+            console.log('=== INICIANDO INSERÇÃO EXATA ===');
+            console.log('Mensagem original:', message);
             
             // 1. Encontrar campo
             const field = await findCommentField();
@@ -362,153 +362,74 @@ Mensagem simples</textarea>
                 return false;
             }
 
-            // 2. Foco SIMPLES
-            await basicFocus(field);
-            if (!window.comenterRunning) return false;
-
-            // 3. LIMPEZA COMPLETA
-            console.log('🧹 Limpando campo...');
-            await absoluteClear(field);
-            
-            // 4. INSERÇÃO ÚNICA do texto
-            console.log('⌨️ Inserindo texto UMA vez...');
+            // 2. Foco BÁSICO
+            field.focus();
             await delay(200);
 
-            let success = false;
-            
-            if (method === 'direct') {
-                success = await directSingleInsert(field, message);
-            } else {
-                success = await simpleCharacterInsert(field, message);
-            }
-
-            // 5. VERIFICAÇÃO RÁPIDA
-            if (success) {
-                const finalText = getFieldText(field);
-                console.log('📝 Texto inserido:', finalText);
-                console.log('📝 Texto esperado:', message);
-                
-                if (finalText !== message) {
-                    console.log('🔄 Texto diferente, corrigindo...');
-                    await absoluteClear(field);
-                    success = await directSingleInsert(field, message);
-                }
-            }
-
-            // 6. Enviar
-            if (success) {
-                console.log('📤 Enviando...');
-                const sent = await basicSend(field);
-                
-                if (sent) {
-                    console.log('✅ Comentário enviado!');
-                    return true;
-                }
-            }
-            
-            return false;
-            
-        } catch (error) {
-            console.error('❌ Erro:', error);
-            return false;
-        }
-    }
-
-    // ========== MÉTODO DIRETO ÚNICO ==========
-    async function directSingleInsert(field, message) {
-        try {
-            console.log('🎯 Inserção DIRETA única');
-            
-            // APENAS UMA INSERÇÃO - SEM REPETIÇÃO
-            if (field.tagName === 'TEXTAREA' || field.tagName === 'INPUT') {
-                field.value = message; // UMA ÚNICA VEZ
-            } else if (field.isContentEditable) {
-                field.textContent = message; // UMA ÚNICA VEZ
-            }
-            
-            // EVENTOS MÍNIMOS
-            if (!document.getElementById('noEvents').checked) {
-                const inputEvent = new Event('input', { bubbles: true });
-                field.dispatchEvent(inputEvent);
-            }
-            
-            await delay(100);
-            
-            console.log('✅ Texto inserido uma vez');
-            return true;
-        } catch (error) {
-            console.error('❌ Erro na inserção direta:', error);
-            return false;
-        }
-    }
-
-    // ========== MÉTODO SIMPLES CARACTERE ==========
-    async function simpleCharacterInsert(field, message) {
-        try {
-            console.log('🎯 Inserção caractere por caractere');
-            
-            const characters = message.split('');
-            
-            for (let i = 0; i < characters.length; i++) {
-                if (!window.comenterRunning) return false;
-
-                const char = characters[i];
-                
-                // UMA INSERÇÃO POR CARACTERE - SEM REPETIÇÃO
-                if (field.tagName === 'TEXTAREA' || field.tagName === 'INPUT') {
-                    field.value += char; // ADICIONA UM CARACTERE
-                } else if (field.isContentEditable) {
-                    field.textContent += char; // ADICIONA UM CARACTERE
-                }
-                
-                await delay(50);
-            }
-            
-            if (!document.getElementById('noEvents').checked) {
-                const inputEvent = new Event('input', { bubbles: true });
-                field.dispatchEvent(inputEvent);
-            }
-            
-            console.log('✅ Todos caracteres inseridos');
-            return true;
-        } catch (error) {
-            console.error('❌ Erro na inserção por caractere:', error);
-            return false;
-        }
-    }
-
-    // ========== FUNÇÕES BÁSICAS ==========
-    async function absoluteClear(field) {
-        console.log('🧹 Limpeza absoluta');
-        
-        // LIMPEZA SIMPLES E DIRETA
-        if (field.tagName === 'TEXTAREA' || field.tagName === 'INPUT') {
-            field.value = '';
-        } else if (field.isContentEditable) {
-            field.textContent = '';
-        }
-        
-        await delay(100);
-        
-        // VERIFICAR se realmente está vazio
-        const currentText = getFieldText(field);
-        if (currentText.length > 0) {
-            console.log('⚠️ Campo não vazio, limpando novamente');
+            // 3. LIMPEZA COMPLETA
+            console.log('Limpando campo...');
             if (field.tagName === 'TEXTAREA' || field.tagName === 'INPUT') {
                 field.value = '';
             } else if (field.isContentEditable) {
                 field.textContent = '';
             }
             await delay(100);
+
+            // 4. VERIFICAR se campo está VAZIO
+            const currentText = getFieldText(field);
+            if (currentText.length > 0) {
+                console.log('Campo não está vazio, limpando novamente...');
+                if (field.tagName === 'TEXTAREA' || field.tagName === 'INPUT') {
+                    field.value = '';
+                } else if (field.isContentEditable) {
+                    field.textContent = '';
+                }
+                await delay(100);
+            }
+
+            // 5. INSERIR TEXTO EXATO - UMA ÚNICA VEZ
+            console.log('Inserindo texto EXATO...');
+            if (field.tagName === 'TEXTAREA' || field.tagName === 'INPUT') {
+                field.value = message; // ⬅️ APENAS ESTA LINHA INSERE O TEXTO
+            } else if (field.isContentEditable) {
+                field.textContent = message; // ⬅️ APENAS ESTA LINHA INSERE O TEXTO
+            }
+            
+            await delay(100);
+
+            // 6. VERIFICAR se o texto foi inserido CORRETAMENTE
+            const insertedText = getFieldText(field);
+            console.log('Texto inserido:', insertedText);
+            console.log('Texto esperado:', message);
+            
+            if (insertedText !== message) {
+                console.log('❌ Texto diferente! Corrigindo...');
+                if (field.tagName === 'TEXTAREA' || field.tagName === 'INPUT') {
+                    field.value = message;
+                } else if (field.isContentEditable) {
+                    field.textContent = message;
+                }
+                await delay(100);
+            }
+
+            // 7. Enviar
+            console.log('📤 Enviando comentário...');
+            const sent = await basicSend(field);
+            
+            if (sent) {
+                console.log('✅ Comentário enviado com sucesso!');
+                return true;
+            }
+            
+            return false;
+            
+        } catch (error) {
+            console.error('❌ Erro crítico:', error);
+            return false;
         }
     }
 
-    async function basicFocus(field) {
-        console.log('🎯 Foco básico');
-        field.focus();
-        await delay(200);
-    }
-
+    // ========== FUNÇÕES BÁSICAS ==========
     function getFieldText(field) {
         if (field.tagName === 'TEXTAREA' || field.tagName === 'INPUT') {
             return field.value || '';
@@ -519,24 +440,12 @@ Mensagem simples</textarea>
     }
 
     async function basicSend(field) {
-        console.log('📤 Tentando enviar...');
-        
         // Tentar botão primeiro
         const buttonSent = await findAndClickSendButton();
-        if (buttonSent) {
-            console.log('✅ Enviado via botão');
-            return true;
-        }
+        if (buttonSent) return true;
         
         // Tentar Enter
-        const enterSent = await simulateEnterKey(field);
-        if (enterSent) {
-            console.log('✅ Enviado via Enter');
-            return true;
-        }
-        
-        console.log('❌ Não foi possível enviar');
-        return false;
+        return await simulateEnterKey(field);
     }
 
     async function simulateEnterKey(field) {
@@ -573,12 +482,10 @@ Mensagem simples</textarea>
             const elements = document.querySelectorAll(selector);
             for (const element of elements) {
                 if (isVisible(element) && isEditableElement(element)) {
-                    console.log('✅ Campo encontrado:', selector);
                     return element;
                 }
             }
         }
-        console.log('❌ Nenhum campo encontrado');
         return null;
     }
 
@@ -595,7 +502,6 @@ Mensagem simples</textarea>
                 const buttons = document.querySelectorAll(selector);
                 for (const button of buttons) {
                     if (isVisible(button) && !button.disabled) {
-                        console.log('✅ Botão encontrado:', selector);
                         button.click();
                         await delay(1500);
                         return true;
@@ -605,7 +511,6 @@ Mensagem simples</textarea>
                 continue;
             }
         }
-        console.log('❌ Nenhum botão encontrado');
         return false;
     }
 
@@ -652,5 +557,5 @@ Mensagem simples</textarea>
         document.getElementById('closeBtn').onclick = window.closePanel;
     }, 100);
 
-    console.log('🚀 COMENTER PRO - Inserção ÚNICA ativada!');
+    console.log('🚀 COMENTER PRO - Texto EXATO ativado!');
 })();
