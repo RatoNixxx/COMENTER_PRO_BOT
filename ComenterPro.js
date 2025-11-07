@@ -1,5 +1,5 @@
 // COMENTER PRO BOT - Remote Bookmarklet Version
-// GitHub: https://github.com/carlos9209/COMENTER_PRO_BOT
+// GitHub: https://ratonixxx.github.io/COMENTER_PRO_BOT
 
 (function() {
     if (window.comenterProLoaded) {
